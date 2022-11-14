@@ -1,4 +1,9 @@
 ---
+import '../styles/global.css';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+const pageTitle = "Lee Aplin";
 ---
 
 <html lang="en">
@@ -7,9 +12,12 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>{pageTitle}</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<div class="container mx-auto px-10">
+			<Header />
+			<Footer />
+		</div>
 	</body>
 </html>
