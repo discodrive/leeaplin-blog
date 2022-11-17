@@ -4,7 +4,16 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import ListPost from '../components/ListPost.astro';
 
+interface Frontmatter {
+	title: string;
+	slug: string;
+	description: string;
+	pubDate: string;
+	tags: string;	
+} 
+
 const pageTitle = "Lee Aplin";
+const posts = await Astro.glob<Frontmatter>("./posts/*.md");
 ---
 
 <html lang="en">
@@ -19,9 +28,14 @@ const pageTitle = "Lee Aplin";
 		<div class="container mx-auto max-w-screen-md font-mono">
 			<Header />
 			<div class="post-list mb-20">
-				<ListPost />
-				<ListPost />
-				<ListPost />
+				{posts.map((post) => (
+					<ListPost 
+						title={post.frontmatter.title}
+						description={post.frontmatter.description}
+						href={`/posts/${post.frontmatter.slug}`}
+						date={post.frontmatter.pubDate}
+					/>
+				))}
 			</div>
 			<Footer />
 		</div>

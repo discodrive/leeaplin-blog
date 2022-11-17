@@ -1,7 +1,16 @@
+---
+interface Props {
+    title: string;
+    description: string;
+    href: string;
+    date: string;
+}
+const {title, description, href, date} = Astro.props as Props;
+---
 <div class="post-item mb-10">
-    <a href="#" class="text-sky-700 hover:text-slate-600">
-        <h2 class="text-lg font-bold">This is a blog post title</h2>
+    <a href={href} class="text-sky-700 hover:text-slate-600">
+        <h2 class="text-lg font-bold">{title}</h2>
     </a>
-    <small>16th November, 2022</small>
-    <p class="mt-5">This is the short blog post description. It shouldn't be too long </p>
+    <small>{date}</small>
+    <p class="mt-5">{description}</p>
 </div>
