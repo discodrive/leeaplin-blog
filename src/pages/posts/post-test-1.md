@@ -3,8 +3,9 @@ title: 'Test blog post'
 pubDate: 2022-14-11
 description: 'Description for test blog post'
 tags: ["tag1", "tag2", "tag3"]
+slug: 'post-test-1'
+layout: "../../layouts/PostLayout.astro"
 ---
-# Test blog post
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sit amet nisl id velit luctus mollis et in libero.
 
