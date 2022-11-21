@@ -9,8 +9,8 @@ const {title, description, href, date} = Astro.props as Props;
 ---
 <div class="post-item mb-10">
     <a href={href} class="text-sky-700 hover:text-slate-600">
-        <h2 class="text-lg font-bold">{title}</h2>
+        <h2 class="text-2xl font-bold mb-4">{title}</h2>
+        <h3 class="mt-0 text-base">{date}</h3>
     </a>
-    <small>{date}</small>
     <p class="mt-5">{description}</p>
 </div>
