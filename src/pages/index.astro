@@ -8,7 +8,7 @@ interface Frontmatter {
 	title: string;
 	slug: string;
 	description: string;
-	pubDate: string;
+	date: string;
 	tags: string;	
 } 
 
@@ -33,7 +33,7 @@ const posts = await Astro.glob<Frontmatter>("./posts/*.md");
 						title={post.frontmatter.title}
 						description={post.frontmatter.description}
 						href={`/posts/${post.frontmatter.slug}`}
-						date={post.frontmatter.pubDate}
+						date={post.frontmatter.date}
 					/>
 				))}
 			</div>
