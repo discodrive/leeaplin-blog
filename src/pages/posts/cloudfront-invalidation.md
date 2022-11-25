@@ -1,6 +1,6 @@
 ---
 title: 'Build a CloudFront invalidation CLI tool'
-date: 'November 21st, 2022'
+date: 'November 21, 2022'
 description: 'Logging in to the AWS dashboard is a slow and inefficient way of creating cache invalidations so I built a simple CLI tool using the AWS CLI to speed things up.'
 tags: ["aws", "shell-scripting", "tooling"]
 slug: 'cloudfront-invalidation'

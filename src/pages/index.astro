@@ -28,14 +28,22 @@ const posts = await Astro.glob<Frontmatter>("./posts/*.md");
 		<div class="container mx-auto max-w-screen-md font-mono">
 			<Header />
 			<div class="post-list mb-20">
-				{posts.map((post) => (
-					<ListPost 
-						title={post.frontmatter.title}
-						description={post.frontmatter.description}
-						href={`/posts/${post.frontmatter.slug}`}
-						date={post.frontmatter.date}
-					/>
-				))}
+				{
+					posts
+						.sort(
+							(a, b) => 
+								Date.parse(b.frontmatter.date) - 
+								Date.parse(a.frontmatter.date)
+							)
+							.map((post) => (
+								<ListPost 
+									title={post.frontmatter.title}
+									description={post.frontmatter.description}
+									href={`/posts/${post.frontmatter.slug}`}
+									date={post.frontmatter.date}
+								/>
+							))
+				}
 			</div>
 			<Footer />
 		</div>
