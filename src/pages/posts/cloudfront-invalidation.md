@@ -19,8 +19,6 @@ It becomes even more frustrating if you are already logged into another AWS acco
 
 ## The solution (sort of)
 
--- CREATE A GIF WITH VHS TO SHOW PROCESS OF DOING THIS IN THE AWS CLI
-
 The first solution that came to mind first was to use the AWS CLI. It is really easy to use and since I already have AWS account profiles set up locally this would be a quick way to run an invalidation.
 
 ```bash
@@ -34,6 +32,8 @@ But this also had problems.
 
 1. You need to know the right commands. This is fine, but it's still a barrier to entry when you're trying to do something quickly.
 2. You need to know the ID of the distribution you want to invalidate, and to get this you need to run `aws cloudfront list-distributions` and copy the distribution ID from the long JSON output.
+
+![List CloudFront distributions with the AWS CLI](/assets/cloudfront-distros.gif "Cloudfront distributions")
 
 I figured I can simplify this process by building a little script to hide some of these awkward processes.
 
