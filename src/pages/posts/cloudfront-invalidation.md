@@ -11,7 +11,7 @@ layout: "../../layouts/PostLayout.astro"
 
 At work we use CloudFront as the main caching tool for our websites. It gives us a nice flexibility when we decide what needs caching, and for how long, and overall it works really nicely. 
 
-Most of our clients are theatres, so the main function of their websites is to sell tickets, so as events are announced, we often want to show changes on cached pages very quickly.
+Most of our clients are theatres, with the main function of their websites being to sell tickets, so as events are announced, we often want to show changes on cached pages very quickly.
 
 This is where the problem presents itself. Getting login details for an AWS account from our password manager, logging in, finding the right distribution and creating an invalidation takes far too long through the dashboard. Especially when a client has made an important last minute change to an event page and they need it live right away.
 
@@ -132,6 +132,7 @@ Save your script as `something.sh` and run it from its directory with `./somethi
 
 ![Create CloudFront invalidation](/assets/cloudfront-invalidation-final.gif "Cloudfront invalidations with the CLI")
 
+You'll be presented with another JSON output which confirms that the invalidation status is InProgress, and if you check the invalidations via the AWS dashboard, you'll see your invalidation there too. It is rough around the edges, but it does the job.
 
 ## Summary
 
