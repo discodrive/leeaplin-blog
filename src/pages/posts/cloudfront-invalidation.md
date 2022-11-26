@@ -130,7 +130,8 @@ aws cloudfront create-invalidation \
 
 Save your script as `something.sh` and run it from its directory with `./something.sh`. If this is your first shell script and you encounter a permissions error be sure to change the file permissions `chmod +x something.sh`.
 
--- CREATE A GIF WITH VHS TO SHOW SCRIPT RUNNING
+![Create CloudFront invalidation](/assets/cloudfront-invalidation-final.gif "Cloudfront invalidations with the CLI")
+
 
 ## Summary
 
