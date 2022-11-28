@@ -21,7 +21,7 @@ The last issue we will deal with is the final response received after creating a
 
 I really like the tools made by [Charm.sh](https://github.com/charmbracelet) and [Gum](https://github.com/charmbracelet/gum) is great for jazzing up shell scripts, so we can use this to improve the UI.
 
-On a mac Gum is easy to install with `brew install gum`. Check the [docs for other installation methods](https://github.com/charmbracelet/gum#installation). 
+On a mac Gum is easy to install with `brew install gum`. Check the [docs for other installation methods](https://github.com/charmbracelet/gum#installation).
 
 Once it's installed, Gum provides lots of options for fancying up interactions in the command line. There are options for fuzzy filtering, choosing from a list of options (plus multi-selection), confirmation boxes as well as loading/status spinners with multiple animation options.
 
@@ -123,3 +123,19 @@ gum style \
 
 sleep 2
 ```
+
+The whole process will look something like this:
+
+![Create CloudFront invalidation](/assets/gum-invalidations.gif "Styled Cloudfront invalidations with the CLI")
+
+## Finishing touches
+
+This script can be run by navigating to its directory, but it's quicker and easier if it can be run from anywhere. I did this easily with a tmux shortcut. If you use tmux, edit your `.tmux.conf` file and add a new key binding to run the script from anywhere when you have a tmux session open. I use `<leader> o` which opens a new tmux window, and closes it again when the script is finished:
+
+```shell
+bind-key -r o run-shell "tmux neww ~/shell-scripts/invalidation.sh"
+```
+
+## Summary
+
+Adding some styling to the CLI tool using [Gum by Charm.sh](https://github.com/charmbracelet/gum) helps to improve the UI and give a user some feedback which was missing from the simple script. Gum gives the flexibility to completely restyle and customise the user experience and adds a bit of flair to a CLI utility.
