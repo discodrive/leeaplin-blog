@@ -140,4 +140,4 @@ We wanted to run CloudFront invalidations without having to log into the AWS das
 
 Using `fzf` and some basic linux commands we can wrap the AWS CLI commands, select an AWS account to work with from a list of preconfigured profiles, and run invalidations quickly and easily.
 
-In the next post we'll make this a nicer user experience using the [Charm.sh tool, Gum](https://github.com/charmbracelet/gum)
+In the [next post](/posts/improving-cli-invalidations) we'll make this a nicer user experience using the [Charm.sh tool, Gum](https://github.com/charmbracelet/gum)
