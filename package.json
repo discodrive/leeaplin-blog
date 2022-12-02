@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@astrojs/tailwind": "^2.1.2",
-    "astro": "^1.6.7"
+    "@astrojs/vue": "^1.2.1",
+    "astro": "^1.6.7",
+    "vue": "^3.2.45"
   },
   "devDependencies": {
     "tailwindcss": "^3.2.4"
