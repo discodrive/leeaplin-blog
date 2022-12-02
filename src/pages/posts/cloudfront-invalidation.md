@@ -73,10 +73,10 @@ profile="$(aws configure list-profiles | sort -k 2 -r | fzf)"`
 	- Name of the distribution so that we can select a human readable name
 
 ```bash
-selected=`printf "$(aws cloudfront list-distributions \
+selected=$(printf "$(aws cloudfront list-distributions \
     --query 'DistributionList.Items[*].[Id,Origins.Items[0].Id]' \
     --output text \
-    --profile $profile | fzf)"`
+    --profile $profile | fzf)")
 ```
 
 The AWS CLI provides client-side filtering which we can utilise with the `--query` parameter. In the above example we instruct the CLI to only return the name of the distribution (`ID`) and the actual distribution ID (`Origins.Items[0].Id`). The `--output` parameter allows us to get the output in either JSON or plain text.
@@ -84,7 +84,7 @@ The AWS CLI provides client-side filtering which we can utilise with the `--quer
 4. The selected item is saved to a variable so that we can work with the result to pull out the bits we want, for example we'll want the ID to pass into the invalidation command:
 
 ```bash
-id=`printf "$selected" | awk '{print $1}'
+id=$(printf %s "$selected" | awk '{print $1}')
 ```
 
 `awk` selects a piece of data based on a provided pattern - in this case we are telling it to print the contents of the first column, the ID
@@ -101,9 +101,9 @@ read -p "Invalidation path: " path
 
 ```bash
 aws cloudfront create-invalidation \
-    --distribution-id $id \
+    --distribution-id "$id" \
     --paths "$path" \
-    --profile $profile
+    --profile "$profile"
 ```
 
 ### Full code
@@ -113,19 +113,19 @@ aws cloudfront create-invalidation \
 ```bash
 profile="$(aws configure list-profiles | sort -k 2 | fzf)"
 
-selected=`printf "$(aws cloudfront list-distributions \
+selected=$(printf "$(aws cloudfront list-distributions \
     --query 'DistributionList.Items[*].[Id,Origins.Items[0].Id]' \
     --output text \
-    --profile $profile | fzf)"`
+    --profile $profile | fzf)")
 
-id=`printf "$selected" | awk '{print $1}'`
+id=$(printf %s "$selected" | awk '{print $1}')
 
 read -p "Invalidation path: " path
 
 aws cloudfront create-invalidation \
-    --distribution-id $id \
+    --distribution-id "$id" \
     --paths "$path" \
-    --profile $profile
+    --profile "$profile"
 ```
 
 Save your script as `something.sh` and run it from its directory with `./something.sh`. If this is your first shell script and you encounter a permissions error be sure to change the file permissions `chmod +x something.sh`.

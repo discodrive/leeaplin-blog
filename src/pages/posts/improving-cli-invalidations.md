@@ -42,13 +42,13 @@ When you have selected your profile and it is pulling in the distributions there
 The spinner displays while a script or command is running, and automatically stops when it exits.
 
 ```shell
-selected=`printf "$(gum spin \
+selected=$(printf "$(gum spin \
     --spinner line \
     --title 'Finding distributions' \
     --show-output -- aws cloudfront list-distributions \
     --query 'DistributionList.Items[*].[Origins.Items[0].Id,Id]' \
     --output text \
-    --profile $profile | gum filter)"`
+    --profile $profile | gum filter)")
 ```
 
 ### Input prompt
@@ -68,9 +68,9 @@ message="Invalidation successfully created."
 
 gum confirm "Invalidate the CloudFront cache for $name distribution on the following path: $path" && \
 gum spin --spinner line --title 'Creating the invalidation...' -- aws cloudfront create-invalidation \
-    --distribution-id $id \
-    --paths $path \
-    --profile $profile || message="No invalidation created."
+    --distribution-id "$id" \
+    --paths "$path" \
+    --profile "$profile" || message="No invalidation created."
 ```
 
 ### Custom styled confirmation message
@@ -81,7 +81,7 @@ Finally we return our confirmation message which says whether or not the invalid
 gum style \
     --foreground 212 --border-foreground 212 --border double \
     --align center --width 50 --margin "1 2" --padding "2 4" \
-    $message
+    "$message"
 
 sleep 2
 ```
@@ -95,16 +95,16 @@ sleep 2
 profile="$(aws configure list-profiles | sort -k 2 | gum filter --placeholder='Select a profile...')"
 
 # Use the selected profile to list distributions and select with gum filter, prompt for an invalidation path
-selected=`printf "$(gum spin 
+selected=$(printf "$(gum spin 
     --spinner line 
     --title 'Finding distributions' 
     --show-output 
     -- aws cloudfront list-distributions 
     --query 'DistributionList.Items[*].[Origins.Items[0].Id,Id]' 
     --output text 
-    --profile $profile | gum filter)"`
-name=`printf "$selected" | awk '{print $1}'`
-id=`printf "$selected" | awk '{print $2}'`
+    --profile "$profile" | gum filter)")
+name=$(printf %s "$selected" | awk '{print $1}')
+id=$(printf %s "$selected" | awk '{print $2}')
 path="$(gum input --placeholder 'Enter an invalidation path:')"
 
 message="Invalidation successfully created."
@@ -112,14 +112,14 @@ message="Invalidation successfully created."
 # Create the invalidation using the selected ID and the invalidation path
 gum confirm "Invalidate the CloudFront cache for $name distribution on the following path: $path" && \
 gum spin --spinner line --title 'Creating the invalidation...' -- aws cloudfront create-invalidation \
-    --distribution-id $id \
-    --paths $path \
-    --profile $profile || message="No invalidation created."
+    --distribution-id "$id" \
+    --paths "$path" \
+    --profile "$profile" || message="No invalidation created."
 
 gum style \
     --foreground 212 --border-foreground 212 --border double \
     --align center --width 50 --margin "1 2" --padding "2 4" \
-    $message
+    "$message"
 
 sleep 2
 ```
