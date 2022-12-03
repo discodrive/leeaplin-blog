@@ -7,7 +7,7 @@ slug: 'heroku-wordpress-user-management-part-2'
 layout: "../../layouts/PostLayout.astro"
 ---
 
-In the last post we wrote a script to remove users from multiple WordPress sites hosted on Heroku. This time we'll finish clearing up the unneeded users with a script to remove them from Heroku Teams.
+In the [last post](/posts/heroku-wordpress-user-management) we wrote a script to remove users from multiple WordPress sites hosted on Heroku. This time we'll finish clearing up the unneeded users with a script to remove them from Heroku Teams.
 
 This post assumes that you are hosting your website on Heroku and have Teams set up. The script uses the Heroku CLI and a simple loop to go through each Team in your account, so ensure you have the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) installed.
 

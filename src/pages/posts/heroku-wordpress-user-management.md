@@ -150,4 +150,4 @@ This command will loop through all of the heroku apps whose name contains `-live
 
 This script allows you to loop through all of your Heroku hosted WordPress sites and delete a specified user from all of them quickly.
 
-In the next post we'll write a script to remove users from multiple Heroku teams.
+In the [next post](/posts/heroku-wordpress-user-management-part-2) we'll write a script to remove users from multiple Heroku teams.
