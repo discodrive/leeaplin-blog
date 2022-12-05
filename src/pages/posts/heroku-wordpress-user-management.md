@@ -1,7 +1,7 @@
 ---
-title: 'Removing users from Heroku and WordPress'
+title: 'Removing users from Heroku and WordPress Part 1 - WordPress'
 date: 'December 2, 2022'
-description: Removing users from multiple projects can be laborious, so figuring out how to automate this boring and time consuming task is a good idea.'
+description: 'Removing users from multiple projects can be laborious, so figuring out how to automate this boring and time consuming task is a good idea.'
 tags: ["heroku", "shell-scripting", "tooling", "wordpress"]
 slug: 'heroku-wordpress-user-management'
 layout: "../../layouts/PostLayout.astro"
@@ -137,7 +137,7 @@ heroku apps:table \
 xargs -n 1 heroku run "bash <(curl -s https://raw.githubusercontent.com/username/script-name.sh) user@example.com" -a
 ```
 
-This command will loop through all of the heroku apps whose name contains `-live`. 
+This command will loop through all of the heroku apps whose name contains `-live`.
 
 - The `--filter` flag is flexible. You can speficy an exact app name, or you can use partials such as `-example` to get all apps named `*-example`. If you append your app names with something like `-example` you can easily group them
 - `--columns` only shows provided columns
@@ -150,4 +150,4 @@ This command will loop through all of the heroku apps whose name contains `-live
 
 This script allows you to loop through all of your Heroku hosted WordPress sites and delete a specified user from all of them quickly.
 
-In the next post we'll write a script to remove users from multiple Heroku teams.
+In the [next post](/posts/heroku-wordpress-user-management-part-2) we'll write a script to remove users from multiple Heroku teams.
