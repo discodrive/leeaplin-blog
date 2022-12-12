@@ -47,21 +47,24 @@ r=$(aws configure get region --profile "$profile")
 cluster=$(aws rds describe-db-clusters --query "*[].{DBClusterIdentifier:DBClusterIdentifier,EngineVersion:EngineVersion}" --output text --profile "$profile" --region "$r" --no-cli-pager | grep 5.6 | awk '{print $1;}')
 ```
 
-The list of clusters to be updated are saved to a `$cluster` varable for use in the final command. The `--query` argument is used to retrieve the `DBClusterIdentifier` and the `EngineVersion`.
+The list of clusters to be updated are saved to a `$clusters` varable for use in the final command. The `--query` argument is used to retrieve the `DBClusterIdentifier` and the `EngineVersion`.
 
 `grep 5.6` filters out only results which use MySQL 5.6, and `awk '{print $1;}'` returns the first column of data, which is the Cluster Identifier.
 
-4. Check if `$cluster` is not empty, and then modify the cluster to upgrade to Aurora version 2. A prefered maintenance window is declared to make sure this action happens during the night, because upgrading a database cluster requires downtime:
+4. Check if `$clusters` is not empty, and then modify each cluster in the list to upgrade to Aurora version 2. A prefered maintenance window is declared to make sure this action happens during the night, because upgrading a database cluster requires downtime:
 
 ```shell
-if [ -n "$cluster" ];then
-    aws rds modify-db-cluster \
-        --db-cluster-identifier "$cluster" \
-        --engine-version "5.7.mysql_aurora.2.11.0" \
-        --preferred-maintenance-window "Wed:03:00-Wed:04:00" \
-        --region "$r" \
-        --profile "$profile" \
-        --no-cli-pager
+if [ -n "$clusters" ];then
+    for cluster in $clusters
+    do
+        aws rds modify-db-cluster \
+            --db-cluster-identifier "$cluster" \
+            --engine-version "5.7.mysql_aurora.2.11.0" \
+            --preferred-maintenance-window "Wed:03:00-Wed:04:00" \
+            --region "$r" \
+            --profile "$profile" \
+            --no-cli-pager
+    done
 fi
 ```
 
@@ -79,16 +82,19 @@ profiles="$(aws configure list-profiles)"
 for profile in $profiles
 do
     r=$(aws configure get region --profile "$profile")
-    cluster=$(aws rds describe-db-clusters --query "*[].{DBClusterIdentifier:DBClusterIdentifier,EngineVersion:EngineVersion}" --output text --profile "$profile" --region "$r" --no-cli-pager | grep 5.6 | awk '{print $1;}')
+    clusters=$(aws rds describe-db-clusters --query "*[].{DBClusterIdentifier:DBClusterIdentifier,EngineVersion:EngineVersion}" --output text --profile "$profile" --region "$r" --no-cli-pager | grep 5.6 | awk '{print $1;}')
 
-    if [ -n "$cluster" ];then
-        aws rds modify-db-cluster \
-            --db-cluster-identifier "$cluster" \
-            --engine-version "5.7.mysql_aurora.2.11.0" \
-            --preferred-maintenance-window "Wed:03:00-Wed:04:00" \
-            --region "$r" \
-            --profile "$profile" \
-            --no-cli-pager
+    if [ -n "$clusters" ];then
+        for cluster in $clusters
+        do
+            aws rds modify-db-cluster \
+                --db-cluster-identifier "$cluster" \
+                --engine-version "5.7.mysql_aurora.2.11.0" \
+                --preferred-maintenance-window "Wed:03:00-Wed:04:00" \
+                --region "$r" \
+                --profile "$profile" \
+                --no-cli-pager
+        done
     fi
 done
 ```
