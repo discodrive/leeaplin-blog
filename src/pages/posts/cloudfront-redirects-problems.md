@@ -28,7 +28,9 @@ Firstly, I checked the cache policies to make sure nothing was awry, but everyth
 
 A quick way to check your policies without having to manually sort through them all in the AWS dashboard is with:
 
-`aws cloudfront list-cache-policies --type custom  --profile PROFILE_NAME --output table`
+```go
+aws cloudfront list-cache-policies --type custom  --profile PROFILE_NAME --output table
+```
 
 !["List cache policies with the AWS CLI"](/assets/cache-policies-cli.jpg "AWS cache policies cli output")
 
