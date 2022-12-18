@@ -20,7 +20,7 @@ The page loaded fine and would cache without any issues if you refreshed it, but
 
 !["Filters on the whats-on page"](/assets/filters.jpg "Website filters")
 
-But for some reason this time the first set of filters applied would work correctly, and the page would cache as expected, but any subsequent changes would still show the results these initial filters.
+But for some reason this time the first set of filters applied would work correctly, and the page would cache as expected, but any subsequent changes would still show the results of these initial filters.
 
 ## The solution
 
