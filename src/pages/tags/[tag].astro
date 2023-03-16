@@ -1,0 +1,62 @@
+---
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import ListPost from "../../components/ListPost.astro";
+
+export async function getStaticPaths() {
+    const allPosts = await Astro.glob("../posts/*.md");
+    const uniqueTags = [...new Set(allPosts.map((post) => post.frontmatter.tags).flat())];
+
+    return uniqueTags.map((tag) => {
+        const filteredPosts = allPosts.filter((post) => post.frontmatter.tags.includes(tag));
+        return {
+            params: { tag },
+            props: { posts: filteredPosts },
+        }
+    });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Tag: {tag}</title>
+	</head>
+	<body>
+        <div class="container mx-auto max-w-screen-md font-mono">
+            <Header />
+                <div class="mb-20">
+                    <div class="px-8 lg:px-0">
+                        <p class="text-white inline-block text-l font-bold mb-4 p-2 bg-slate-700">Posts tagged with {tag}</p>
+                        <ul>
+                            {
+                            posts
+                                .sort(
+                                    (a, b) => 
+                                        Date.parse(b.frontmatter.date) - 
+                                        Date.parse(a.frontmatter.date)
+                                    )
+                                .map((post) =>
+                                    <ListPost 
+                                        title={post.frontmatter.title}
+                                        description={post.frontmatter.description}
+                                        href={`/posts/${post.frontmatter.slug}`}
+                                        date={post.frontmatter.date}
+                                        tags={post.frontmatter.tags}
+                                    />
+                                )
+                            }
+                        </ul>
+                    </div>
+                </div>
+            <Footer />
+        </div>
+	</body>
+</html>

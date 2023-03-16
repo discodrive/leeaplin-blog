@@ -9,8 +9,8 @@ interface Frontmatter {
 	slug: string;
 	description: string;
 	date: string;
-	tags: string;	
-} 
+	tags: string[];
+}
 
 const pageTitle = "Lee Aplin";
 const posts = await Astro.glob<Frontmatter>("./posts/*.md");
@@ -30,19 +30,19 @@ const posts = await Astro.glob<Frontmatter>("./posts/*.md");
 			<div class="post-list mb-20">
 				{
 					posts
-						.sort(
-							(a, b) => 
-								Date.parse(b.frontmatter.date) - 
-								Date.parse(a.frontmatter.date)
-							)
-							.map((post) => (
-								<ListPost 
-									title={post.frontmatter.title}
-									description={post.frontmatter.description}
-									href={`/posts/${post.frontmatter.slug}`}
-									date={post.frontmatter.date}
-								/>
-							))
+						.sort((a, b) => 
+							Date.parse(b.frontmatter.date) - 
+							Date.parse(a.frontmatter.date)
+						)
+						.map((post) => (
+							<ListPost 
+								title={post.frontmatter.title}
+								description={post.frontmatter.description}
+								href={`/posts/${post.frontmatter.slug}`}
+								date={post.frontmatter.date}
+								tags={post.frontmatter.tags}
+							/>
+						))
 				}
 			</div>
 			<Footer />
