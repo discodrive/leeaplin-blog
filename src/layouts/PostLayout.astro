@@ -6,7 +6,7 @@ interface Props {
         title: string;
         slug: string;
         date: string;
-        tags: string;
+        tags: string[];
     }
 }
 
@@ -15,7 +15,12 @@ const { frontmatter } = Astro.props as Props;
 
 <Layout title={frontmatter.title}>
     <h2 class="mb-4 ">{frontmatter.title}</h2>
-    <h3 class="mt-0 text-base">{frontmatter.date}</h3>
+    <h3 class="mt-0 mb-4 text-base">{frontmatter.date}</h3>
+    <div class="tags mb-5">
+        {frontmatter.tags.map((tag) => (
+            <a href={`/tags/${tag}`} class="mr-2 p-2 bg-slate-700 text-white text-xs">{tag}</a>
+        ))}
+    </div>
     <slot />
 </Layout>
 
