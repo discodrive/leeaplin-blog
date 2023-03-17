@@ -1,10 +1,12 @@
 ---
 import Navigation from './Navigation.astro';
+import ThemeIcon from './ThemeIcon.astro';
 
 const pageTitle = "Devops | Backend Dev";
 ---
 
 <header class="mt-10 mb-20">
     <Navigation />
-	<h1 class="text-4xl font-bold text-slate-700">{pageTitle}</h1>
+	<h1 class="text-4xl font-bold text-slate-700 dark:text-white">{pageTitle}</h1>
+    <ThemeIcon />
 </header>
