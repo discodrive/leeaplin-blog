@@ -1,15 +1,11 @@
 ---
-title: 'Terraforming a site on Heroku and AWS - Part 1'
+title: 'Terraforming a WordPress site on Heroku and AWS - Part 1'
 date: 'March 12, 2023'
 description: 'Set up the infrastructure for a WordPress site hosted on Heroku and AWS'
-tags: ["infrastructure", "terraform", "webapp"]
+tags: ["infrastructure", "terraform", "webapp", "wordpress"]
 slug: 'heroku-aws-terraform'
 layout: "../../layouts/PostLayout.astro"
 ---
-
-In my day job we mainly build WordPress websites which are hosted on Heroku and use several AWS services. Although the setup isn't overly complicated, it can take a while to manually spin up all of the resources required to host our sites, and doing it manually is prone to human error.
-
-The solution is to provision everything using Terraform which allows us to create our infrastructure as code.
 
 This post will run through the scripts required to set up all of the key resources in this common web application stack. We won't modularise each component at this stage, but focus on the core script first.
 
@@ -159,9 +155,10 @@ resource "aws_rds_cluster_instance" "staging-instance" {
 > **Important note:**
 >
 > 1. As in the Heroku application, we reference some variables here. These are set in a `variables.tf` file which will be explained later.
-> 2. The `aws_rds_cluster_instance` resource referenecs the staging cluster, `aws_rds_cluster`. Since we won't know the values of these things until the `aws_rds_cluster` has been created, Terraform will automatically order the creation of resources depending on what is required. So `aws_rds_cluster` will be provisioned first, then `aws_rds_cluster_instance` after.
-> 3.There is a reference to `aws_security_group.sg.id`. In order to make the database public we need specific rules for our inbound traffic. We'll create the security group next.
-> 4. Read more about [provisioning RDS clusters](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_cluster) and [RDS instances](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_cluster_instance)
+> 2. In the provider block we set a profile. It will use your default AWS local profile to determine which account the resources should be provisioned on. [Read more about AWS named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) if you don't have one set up, or [read more about different authentication methods](https://registry.terraform.io/providers/hashicorp/aws/latest/docs).
+> 3. The `aws_rds_cluster_instance` resource referenecs the staging cluster, `aws_rds_cluster`. Since we won't know the values of these things until the `aws_rds_cluster` has been created, Terraform will automatically order the creation of resources depending on what is required. So `aws_rds_cluster` will be provisioned first, then `aws_rds_cluster_instance` after.
+> 4. There is a reference to `aws_security_group.sg.id`. In order to make the database public we need specific rules for our inbound traffic. We'll create the security group next.
+> 5. Read more about [provisioning RDS clusters](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_cluster) and [RDS instances](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_cluster_instance)
 
 ## Create the security group
 
@@ -248,3 +245,13 @@ app_region = "region can be added here if you don't want to use the default"
 database_username = "username-here"
 database_password = "password-here"
 ```
+
+## Provision the resources
+
+With the variables set, the script can be run to provision these resources. Run `terraform fmt` and `terraform validate` to make sure your script is linted and valid, then run `terraform plan --out=unique-identifier-here` to generate a plan. The plan will describe all of the resources your plan on creating, so it is worth scanning through it to make sure everything looks correct.
+
+Finally run `terraform apply unique-identifier-here` to create your resources.
+
+## Summary
+
+At this point you should have a web app in Heroku with a couple of useful addons, and an AWS RDS Aurora database which you'll be able to use with your WordPress application. In the next post we'll improve this script and start to build out our scripts to include other useful resources such as S3 buckets for storage and CloudFront for caching.
