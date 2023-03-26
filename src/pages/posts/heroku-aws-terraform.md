@@ -1,13 +1,13 @@
 ---
 title: 'Terraforming a WordPress site on Heroku and AWS - Part 1'
-date: 'March 12, 2023'
+date: 'March 26, 2023'
 description: 'Set up the infrastructure for a WordPress site hosted on Heroku and AWS'
 tags: ["infrastructure", "terraform", "webapp", "wordpress"]
 slug: 'heroku-aws-terraform'
 layout: "../../layouts/PostLayout.astro"
 ---
 
-This post will run through the scripts required to set up all of the key resources in this common web application stack. We won't modularise each component at this stage, but focus on the core script first.
+This post will run through the scripts required to set up all of the key resources in this common web application stack. We won't modularise each component at this stage, but focus on the core script first. All of the files described in this post can be found at the [accompanying GitHub repo](https://github.com/discodrive/blog-post-terraform-example).
 
 If you don't already have Terraform installed, check out the [official docs](https://developer.hashicorp.com/terraform/downloads) to set up on your machine first. You'll also need accounts in both Heroku and AWS. It's also worth noting that this isn't an absolute beginners Terraform tutorial. There are quite a few resources to create here, so knowing your way around Terraform might help.
 
@@ -254,4 +254,7 @@ Finally run `terraform apply unique-identifier-here` to create your resources.
 
 ## Summary
 
-At this point you should have a web app in Heroku with a couple of useful addons, and an AWS RDS Aurora database which you'll be able to use with your WordPress application. In the next post we'll improve this script and start to build out our scripts to include other useful resources such as S3 buckets for storage and CloudFront for caching.
+At this point you should have a web app in Heroku with a couple of useful addons, and an AWS RDS Aurora database which you'll be able to use with your WordPress application. You can see an example of the script described in this post in the [accompanying example GitHub repo](https://github.com/discodrive/blog-post-terraform-example).
+
+
+In the next post we'll improve this script and start to build out our scripts to include other useful resources such as S3 buckets for storage and CloudFront for caching.
