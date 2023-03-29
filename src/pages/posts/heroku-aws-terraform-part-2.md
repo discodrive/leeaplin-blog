@@ -1,6 +1,6 @@
 ---
 title: 'Terraforming a WordPress site on Heroku and AWS - Part 2'
-date: 'March 26, 2023'
+date: 'March 29, 2023'
 description: 'Expand upon the basic resources from part 1, adding some storage with S3 and caching with CloudFront'
 tags: ["infrastructure", "terraform", "cloudfront", "s3", "wordpress"]
 slug: 'heroku-aws-terraform-part-2'
@@ -262,5 +262,16 @@ variable "staging_origin_id" {
 }
 ```
 
+One other thing of note in the `aws_cloudfront_distribution` above is the `viewer_certificate`. In order for CloudFront to work with your application, you'll need to set up a certificate in Amazon Certificate Manager. The reason that this is left to do manually rather than in this script, is because you need to verify you domain via DNS to validate the certificate.
 
-WRITE ABOUT SETTING UP CERTIFICATE
+If you are using Route 53, then this can be automated in a Terraform script, but if your DNS is handled anywhere else it is harder to automate this stage, so we'll handle it manually.
+
+### Certificate
+
+In your AWS account navigate to ACM. Ensure that you're in region `us-east-1` and add a new certificate for the domain of your website. You'll be able to add this domain name into your distribution config once the certificate is provisioned, and at that point you'll need to add a CNAME record for your domain root, with the CloudFront domain as the value.
+
+## Summary
+
+In this post we expanded upon the resources we created in [part 1](/posts/heroku-aws-terraform) by adding an S3 bucket for storage and a CloudFront distribution to improve website performance. The scripts that were added in this post can be found in the part 2 directory on the [Terraform blog post repo in my GitHub account](https://github.com/discodrive/blog-post-terraform-example/tree/main/part-2).
+
+Next time we'll finish off the stack for this website architecture by adding a pipeline into Heroku so that we can have both a staging application and a deployment application, and we'll also provision some basic website uptime monitoring using Status Cake.
