@@ -22,7 +22,7 @@ We'll need three pieces of code for this method to work:
 
 ### variables.tf
 
-The first thing to do is create a variable which can be used to set up the unique values for each resource. In the example of subnets in a VPC, the main unique value to each subet is the `cidr_block`. This is simply a string value representing an IP address or IP range.
+The first thing to do is create a variable which can be used to set up the unique values for each resource. In the example of subnets in a VPC, the main unique value to each subnet is the `cidr_block`. This is simply a string value representing an IP address or IP range.
 
 In your `variables.tf` file, create a variable with the type of `list` and inside that list, define an object. Within this object is where we will specify the unique elements:
 
